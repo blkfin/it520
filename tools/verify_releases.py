@@ -21,15 +21,20 @@ def sha256(p: Path) -> str:
     return h.hexdigest()
 
 
-lectures = sorted(d for d in ROOT.glob("l[0-9][0-9]") if d.is_dir())
-if not lectures:
+legacy_lectures = sorted(
+    d for d in ROOT.glob("l[0-9][0-9]") if d.is_dir() and not d.is_symlink()
+)
+canonical_slugs = sorted(
+    d.name for d in (ROOT / "releases").glob("l[0-9][0-9]") if d.is_dir()
+)
+if not legacy_lectures and not canonical_slugs:
     print("no lecture directories yet — nothing to verify")
     sys.exit(0)
 
 if not (ROOT / ".nojekyll").is_file():
     problems.append(".nojekyll is missing; the `current` symlink will not be served")
 
-for lec in lectures:
+for lec in legacy_lectures:
     name = lec.name
     releases, receipts = lec / "releases", lec / "receipts"
     if not releases.is_dir():
@@ -72,6 +77,46 @@ for lec in lectures:
         if not target.is_dir():
             problems.append(f"{name}/current points at {pointer.readlink()}, which does not exist")
 
+for name in canonical_slugs:
+    releases = ROOT / "releases" / name
+    receipts = ROOT / "receipts" / name
+
+    for rel in sorted(d for d in releases.iterdir() if d.is_dir()):
+        receipt = receipts / f"{rel.name}.json"
+        if not receipt.is_file():
+            problems.append(
+                f"releases/{name}/{rel.name}: no receipt at receipts/{name}/{rel.name}.json — "
+                "a release without a receipt was not produced by publish-lecture.sh"
+            )
+            continue
+        try:
+            declared = json.loads(receipt.read_text())["artifact"]["objects"]
+        except Exception as exc:
+            problems.append(f"receipts/{name}/{rel.name}.json: unreadable ({exc})")
+            continue
+
+        want = {o["path"]: o for o in declared}
+        have = {str(p.relative_to(rel)) for p in rel.rglob("*") if p.is_file()}
+        for missing in sorted(set(want) - have):
+            problems.append(f"releases/{name}/{rel.name}: {missing} is in the receipt but not published")
+        for extra in sorted(have - set(want)):
+            problems.append(f"releases/{name}/{rel.name}: {extra} is published but not in the receipt")
+        for path in sorted(set(want) & have):
+            actual = sha256(rel / path)
+            if actual != want[path]["sha256"]:
+                problems.append(
+                    f"releases/{name}/{rel.name}: {path} does not match the receipt "
+                    f"({actual[:12]} != {want[path]['sha256'][:12]})"
+                )
+
+    pointer = ROOT / name
+    if not pointer.is_symlink():
+        problems.append(f"{name} is not a symlink; the stable student URL depends on it")
+    else:
+        target = ROOT / pointer.readlink()
+        if not target.is_dir():
+            problems.append(f"{name} points at {pointer.readlink()}, which does not exist")
+
 ignored = subprocess.run(
     ["git", "status", "--ignored", "--porcelain"], cwd=ROOT, capture_output=True, text=True
 ).stdout.splitlines()
@@ -86,5 +131,5 @@ if problems:
         print(f"  * {p}")
     sys.exit(1)
 
-total = sum(len(list((lec / 'releases').rglob('*'))) for lec in lectures)
-print(f"OK — {len(lectures)} lecture(s) verified against their receipts")
+count = len(legacy_lectures) + len(canonical_slugs)
+print(f"OK — {count} lecture(s) verified against their receipts")
