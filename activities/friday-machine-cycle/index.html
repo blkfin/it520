@@ -37,6 +37,16 @@
     input { width:100%; border:0; border-bottom:1px solid #697783; padding:5px 1px 3px;
             font:inherit; font-size:.85rem; background:transparent; }
     input.sm { display:inline-block; width:58px; }
+    .hints { margin-top:12px; }
+    .hints > p { font-size:.85rem; color:#46535f; margin:0 0 5px; }
+    details.hint { border:1px solid var(--line); border-left:4px solid var(--gold);
+                   border-radius:5px; padding:5px 9px; margin:4px 0; background:#fffdf6; }
+    details.hint > summary { cursor:pointer; font-size:.87rem; font-weight:600; color:#8a6510; }
+    details.hint p { font-size:.85rem; margin:5px 0; }
+    details.hint p.worked { border-left:2px solid var(--line); padding-left:8px; }
+    details.hint b.lead { color:var(--ink); }
+    details.hint code { font-family:ui-monospace,monospace; font-size:.9em; }
+    .printnote { display:none; }
     .check { border:2px solid #4f6575; border-radius:8px; padding:9px 12px; margin-top:12px; }
     .check p { margin:4px 0; font-size:.9rem; }
     .boundary { margin-top:10px; font-size:.8rem; color:#46535f; }
@@ -51,10 +61,12 @@
       .top { gap:7px; margin:7px 0; }
       table.lookup, .mem, .state div { font-size:9.2pt; }
       table.trace th, table.trace td { padding:5px 6px; }
-      table.trace tbody td { height:62pt; }
+      table.trace tbody td { height:59pt; }
       input { font-size:9.4pt; padding:7px 1px 4px; }
       table.trace tr { break-inside:avoid; }
       .check { margin-top:8px; padding:6px 10px; }
+      .hints { display:none; }
+      .printnote { display:block; margin:4px 0 0; font-size:8.6pt; color:#46535f; }
     }
   </style>
 </head>
@@ -127,6 +139,71 @@
       </tr>
     </tbody>
   </table>
+
+
+  <p class="printnote">Stuck on a stage? The online version of this sheet has a hint for each stage.</p>
+
+  <section class="hints">
+    <p><strong>Stuck on a stage?</strong> Each stage below has a hint. It explains what the stage
+      is doing, then works <strong>cycle 1</strong> all the way through as an example. Cycles 2 and 3
+      are yours — the hint tells you the rule to apply and what to watch for, not the answer.
+      Open only the ones you need.</p>
+
+    <details class="hint">
+      <summary>Hint — stage 1, FETCH</summary>
+      <p><b class="lead">What this stage does.</b> The PC holds an address. Fetch goes to that address,
+        copies whatever is sitting there into the IR, and then moves the PC on to the next address.
+        It does all of this <em>before</em> anything knows what the instruction means — fetch is
+        blind, it just collects.</p>
+      <p class="worked"><b class="lead">Cycle 1, worked.</b> The PC starts at <code>0</code>. Address
+        <code>0</code> in memory holds <code>LDI 5</code>, so <b>IR holds <code>LDI 5</code></b>.
+        Then the PC moves on: <b>PC is now <code>1</code></b>.</p>
+      <p><b class="lead">Carry it into cycles 2 and 3.</b> Each cycle starts from the PC you wrote in
+        the row above, not from 0. Notice that the PC has <em>already</em> moved before you get to
+        execute — so during cycle 2 the PC is not pointing at the instruction you are running.</p>
+    </details>
+
+    <details class="hint">
+      <summary>Hint — stage 2, DECODE</summary>
+      <p><b class="lead">What this stage does.</b> The IR now holds something like <code>LDI 5</code>.
+        <code>LDI</code> is not a word — it is a code, and it means nothing until it is looked up.
+        Decode is the lookup, and it produces <em>two</em> things: what operation to perform, and
+        where the result is supposed to go. Both boxes get filled in, every cycle.</p>
+      <p class="worked"><b class="lead">Cycle 1, worked.</b> The IR holds <code>LDI 5</code>. Find the
+        <code>LDI n</code> row in the lookup table. <b>Means: load the number 5 into register A.</b>
+        <b>Destination: A.</b></p>
+      <p><b class="lead">Carry it into cycles 2 and 3.</b> The destination is not A every time — one of
+        the three instructions sends its result somewhere else, and decode is the only stage that can
+        tell you that. Also: the lookup table has four rows and you only need three. One row is in
+        there to be looked past, so read the code you actually have in the IR.</p>
+    </details>
+
+    <details class="hint">
+      <summary>Hint — stage 3, EXECUTE</summary>
+      <p><b class="lead">What this stage does.</b> Work out the value. That is all. Nothing has been
+        stored yet — the register still holds its old value the whole time execute is running. If you
+        find yourself changing A here, you have run ahead into stage 4.</p>
+      <p class="worked"><b class="lead">Cycle 1, worked.</b> <code>LDI 5</code> loads a number that is
+        carried in the instruction itself, so there is nothing to calculate. <b>Result: <code>5</code>.</b>
+        A is still unset at this moment.</p>
+      <p><b class="lead">Carry it into cycles 2 and 3.</b> Cycle 2 needs a value execute cannot invent —
+        it has to come from what A already holds, which is why you write the calculation and then the
+        result. Cycle 3 calculates nothing at all; execute just produces the value that is about to be
+        copied. Producing a value with no arithmetic is still execute doing its job.</p>
+    </details>
+
+    <details class="hint">
+      <summary>Hint — stage 4, WRITE</summary>
+      <p><b class="lead">What this stage does.</b> Put the result from execute into the destination you
+        wrote down in decode. Not the destination you expected — the one you decoded.</p>
+      <p class="worked"><b class="lead">Cycle 1, worked.</b> Decode said the destination is A, execute
+        produced 5, so <b>A = <code>5</code></b>.</p>
+      <p><b class="lead">Carry it into cycles 2 and 3.</b> Before you fill in a write box, look left at
+        your own decode box in the same row. If the two disagree, decode is right. And when a value is
+        copied into memory, the register it came from still holds it afterwards — copying is not
+        moving, so nothing gets emptied.</p>
+    </details>
+  </section>
 
   <section class="check">
     <h2 style="margin-top:0">Final check</h2>
