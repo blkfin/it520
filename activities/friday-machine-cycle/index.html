@@ -3,131 +3,145 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>IT 520 — Run two machine cycles</title>
+  <title>IT 520 — Run three machine cycles</title>
   <style>
-    :root { color-scheme: light; --ink:#17202a; --blue:#174a7e; --pale:#eef5fb; --line:#9aa7b2; }
+    :root { color-scheme: light; --ink:#17202a; --blue:#174a7e; --pale:#eef5fb; --line:#9aa7b2; --gold:#c18b1b; }
     * { box-sizing: border-box; }
-    body { max-width: 1050px; margin: 0 auto; padding: 24px; color:var(--ink); font:16px/1.4 system-ui,sans-serif; }
-    h1 { margin:0 0 4px; font-size:clamp(1.55rem,4vw,2.25rem); color:var(--blue); }
-    h2 { margin:24px 0 8px; font-size:1.3rem; }
-    p { margin:8px 0; }
-    .sub { color:#46535f; }
-    .machine { display:grid; grid-template-columns:1.4fr .8fr; gap:14px; margin:20px 0; }
-    .box, .stage, .check { border:2px solid var(--blue); border-radius:10px; padding:14px; }
+    body { max-width:1050px; margin:0 auto; padding:20px; color:var(--ink);
+           font:15px/1.35 system-ui,sans-serif; }
+    h1 { margin:0 0 2px; font-size:1.6rem; color:var(--blue); }
+    h2 { margin:16px 0 6px; font-size:1.05rem; color:var(--blue); }
+    p { margin:5px 0; }
+    .sub { color:#46535f; font-size:.9rem; }
+    .top { display:grid; grid-template-columns:1.15fr .85fr 1.5fr; gap:10px; margin:12px 0; align-items:start; }
+    .box { border:2px solid var(--blue); border-radius:8px; padding:9px 11px; }
+    .box strong { display:block; font-size:.8rem; letter-spacing:.03em; margin-bottom:5px; }
     .memory { background:var(--pale); }
-    .memory div { padding:8px; margin-top:8px; border:1px solid var(--line); background:white; font-family:ui-monospace,monospace; }
-    .state { display:grid; gap:8px; }
-    .state div { padding:8px; border-bottom:1px solid var(--line); }
-    .cycle { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
-    .stage { min-height:205px; border-width:1.5px; }
-    .stage h3 { margin:0 0 8px; color:var(--blue); }
-    .prompt { font-size:.92rem; min-height:54px; }
-    input, textarea { width:100%; border:1px solid #697783; border-radius:5px; padding:7px; font:inherit; background:white; }
-    input { margin:4px 0 8px; }
-    textarea { min-height:58px; resize:vertical; }
-    .checkpoint { margin:12px 0; padding:10px 14px; background:#f7f7f2; border-left:5px solid #c18b1b; }
-    .check { margin-top:20px; border-color:#4f6575; }
-    .check label { display:block; margin:12px 0 4px; font-weight:650; }
-    code { font-weight:700; }
-    .boundary { margin-top:14px; font-size:.9rem; color:#46535f; }
-    @media (max-width:800px) { .cycle { grid-template-columns:1fr 1fr; } }
-    @media (max-width:520px) { .machine,.cycle { grid-template-columns:1fr; } .stage { min-height:0; } }
+    .mem { padding:4px 7px; margin-top:3px; border:1px solid var(--line); background:#fff;
+           font-family:ui-monospace,monospace; font-size:.85rem; }
+    .mem em { font-style:normal; color:#5b6770; }
+    .state div { padding:3px 0; border-bottom:1px solid var(--line); font-family:ui-monospace,monospace; font-size:.85rem; }
+    table.lookup { border-collapse:collapse; width:100%; font-size:.82rem; }
+    table.lookup th, table.lookup td { border:1px solid var(--line); padding:3px 6px; text-align:left; }
+    table.lookup th { background:var(--pale); }
+    table.lookup td:first-child { font-family:ui-monospace,monospace; font-weight:700; white-space:nowrap; }
+    table.trace { border-collapse:collapse; width:100%; margin-top:4px; }
+    table.trace th, table.trace td { border:1px solid var(--line); padding:5px 6px; vertical-align:top; }
+    table.trace thead th { background:var(--blue); color:#fff; font-size:.86rem; text-align:left; }
+    table.trace thead th .f { color:#cfe0f0; }
+    table.trace thead th.rowhead { background:var(--blue); color:#fff; }
+    table.trace th.rowhead { background:var(--pale); width:112px; font-size:.85rem; }
+    table.trace th.rowhead span { display:block; font-family:ui-monospace,monospace; font-weight:400;
+                                  font-size:.78rem; color:#46535f; margin-top:2px; }
+    .f { display:block; font-size:.78rem; color:#46535f; margin:1px 0 0; font-weight:400; }
+    input { width:100%; border:0; border-bottom:1px solid #697783; padding:5px 1px 3px;
+            font:inherit; font-size:.85rem; background:transparent; }
+    input.sm { display:inline-block; width:58px; }
+    .check { border:2px solid #4f6575; border-radius:8px; padding:9px 12px; margin-top:12px; }
+    .check p { margin:4px 0; font-size:.9rem; }
+    .boundary { margin-top:10px; font-size:.8rem; color:#46535f; }
+    @media (max-width:820px) { .top { grid-template-columns:1fr; }
+      table.trace, table.trace tbody, table.trace tr, table.trace td, table.trace th { display:block; width:auto; }
+      table.trace thead { display:none; }
+      table.trace td::before { content:attr(data-stage); display:block; font-weight:700; font-size:.76rem; color:var(--blue); } }
+    @page { size: letter portrait; margin: 0.4in; }
     @media print {
-      body { max-width:none; padding:0; font-size:11pt; }
-      .stage { min-height:178px; break-inside:avoid; }
-      .cycle { grid-template-columns:repeat(4,1fr); }
-      .machine { grid-template-columns:1.4fr .8fr; }
-      textarea { min-height:42px; }
-      h2 { break-after:avoid; }
+      body { max-width:none; padding:0; font:10.4pt/1.3 system-ui,sans-serif; }
+      h1 { font-size:1.25rem; } h2 { font-size:.95rem; margin:9px 0 3px; }
+      .top { gap:7px; margin:7px 0; }
+      table.lookup, .mem, .state div { font-size:9.2pt; }
+      table.trace th, table.trace td { padding:5px 6px; }
+      table.trace tbody td { height:62pt; }
+      input { font-size:9.4pt; padding:7px 1px 4px; }
+      table.trace tr { break-inside:avoid; }
+      .check { margin-top:8px; padding:6px 10px; }
     }
   </style>
 </head>
 <body>
-  <h1>Run two machine cycles</h1>
-  <p class="sub">Name <input aria-label="Name" style="width:min(360px,70%);display:inline-block"></p>
-  <p><strong>Your job:</strong> follow two plain-English instructions. Every instruction goes through
-    <strong>FETCH → DECODE → EXECUTE → WRITE</strong>.</p>
+  <h1>Run three machine cycles</h1>
+  <p class="sub">Name <input aria-label="Name" style="width:min(300px,60%);display:inline-block"></p>
+  <p><strong>Your job:</strong> run three instructions. Each one goes through the same four stages —
+    <strong>FETCH → DECODE → EXECUTE → WRITE</strong>. The instructions are shortened codes,
+    so you have to look each one up in the table to find out what it means.</p>
 
-  <section class="machine" aria-label="Starting machine">
+  <section class="top">
     <div class="box memory">
-      <strong>MEMORY — instructions waiting to run</strong>
-      <div>address 0: WRITE 5 TO REGISTER A</div>
-      <div>address 1: ADD 1 TO THE VALUE IN REGISTER A</div>
+      <strong>MEMORY</strong>
+      <div class="mem">0: <b>LDI 5</b></div>
+      <div class="mem">1: <b>ADI 1</b></div>
+      <div class="mem">2: <b>STA 20</b></div>
+      <div class="mem">20: <em>(data — empty)</em></div>
     </div>
     <div class="box state">
       <strong>STARTING STATE</strong>
       <div>PC = 0</div>
       <div>IR = empty</div>
-      <div>Register A = unset</div>
+      <div>A = unset</div>
+      <div>M[20] = empty</div>
+    </div>
+    <div class="box">
+      <strong>DECODE LOOKUP TABLE</strong>
+      <table class="lookup">
+        <tr><th>Code</th><th>What it means</th><th>Destination</th></tr>
+        <tr><td>LDI n</td><td>Load the number n into register A</td><td>A</td></tr>
+        <tr><td>ADI n</td><td>Add the number n to what is in A</td><td>A</td></tr>
+        <tr><td>SBI n</td><td>Subtract the number n from what is in A</td><td>A</td></tr>
+        <tr><td>STA n</td><td>Copy what is in A into memory address n</td><td>M[n]</td></tr>
+      </table>
     </div>
   </section>
 
-  <h2>Cycle 1 — the PC points to address 0</h2>
-  <section class="cycle">
-    <article class="stage">
-      <h3>1. FETCH</h3>
-      <p class="prompt">Copy the instruction at the PC into the IR. Then move the PC to the next address.</p>
-      <label>IR now holds</label><textarea aria-label="Cycle 1 IR"></textarea>
-      <label>PC is now</label><input aria-label="Cycle 1 PC">
-    </article>
-    <article class="stage">
-      <h3>2. DECODE</h3>
-      <p class="prompt">In your own words, what is the instruction asking the machine to do?</p>
-      <textarea aria-label="Cycle 1 decode"></textarea>
-      <label>Destination</label><input aria-label="Cycle 1 destination">
-    </article>
-    <article class="stage">
-      <h3>3. EXECUTE</h3>
-      <p class="prompt">Determine the result the instruction will produce.</p>
-      <label>Result ready to write</label><input aria-label="Cycle 1 result">
-      <p>Do not update A until the write stage.</p>
-    </article>
-    <article class="stage">
-      <h3>4. WRITE</h3>
-      <p class="prompt">Put the result into the decoded destination.</p>
-      <label>Register A is now</label><input aria-label="Cycle 1 register A">
-    </article>
-  </section>
-  <div class="checkpoint"><strong>Checkpoint:</strong> PC = <input aria-label="Checkpoint 1 PC" style="width:70px"> &nbsp; Register A = <input aria-label="Checkpoint 1 A" style="width:70px"></div>
-
-  <h2>Cycle 2 — run the next instruction</h2>
-  <section class="cycle">
-    <article class="stage">
-      <h3>1. FETCH</h3>
-      <p class="prompt">Use the current PC. Copy that instruction into the IR, then advance the PC.</p>
-      <label>IR now holds</label><textarea aria-label="Cycle 2 IR"></textarea>
-      <label>PC is now</label><input aria-label="Cycle 2 PC">
-    </article>
-    <article class="stage">
-      <h3>2. DECODE</h3>
-      <p class="prompt">What operation, input, and destination does this instruction name?</p>
-      <textarea aria-label="Cycle 2 decode"></textarea>
-      <label>Destination</label><input aria-label="Cycle 2 destination">
-    </article>
-    <article class="stage">
-      <h3>3. EXECUTE</h3>
-      <p class="prompt">Use the current value in A and show the calculation.</p>
-      <label>Calculation</label><input aria-label="Cycle 2 calculation">
-      <label>Result ready to write</label><input aria-label="Cycle 2 result">
-    </article>
-    <article class="stage">
-      <h3>4. WRITE</h3>
-      <p class="prompt">Put the result into the decoded destination.</p>
-      <label>Register A is now</label><input aria-label="Cycle 2 register A">
-    </article>
-  </section>
+  <h2>The trace — one row per instruction, one column per stage</h2>
+  <table class="trace">
+    <thead>
+      <tr>
+        <th class="rowhead">Instruction</th>
+        <th>1. FETCH<span class="f">Copy the instruction at the PC into the IR, then move the PC on.</span></th>
+        <th>2. DECODE<span class="f">Look the code up. What does it mean, and where does the result go?</span></th>
+        <th>3. EXECUTE<span class="f">Work out the result. Nothing is stored yet.</span></th>
+        <th>4. WRITE<span class="f">Put the result in the destination you decoded.</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th class="rowhead">Cycle 1<span>PC starts at 0</span></th>
+        <td data-stage="1. FETCH">IR holds <input aria-label="C1 IR"><span class="f">PC is now</span><input aria-label="C1 PC"></td>
+        <td data-stage="2. DECODE">Means <input aria-label="C1 meaning"><span class="f">Destination</span><input aria-label="C1 destination"></td>
+        <td data-stage="3. EXECUTE">Result <input aria-label="C1 result"></td>
+        <td data-stage="4. WRITE">A = <input aria-label="C1 A"></td>
+      </tr>
+      <tr>
+        <th class="rowhead">Cycle 2<span>use the PC you wrote</span></th>
+        <td data-stage="1. FETCH">IR holds <input aria-label="C2 IR"><span class="f">PC is now</span><input aria-label="C2 PC"></td>
+        <td data-stage="2. DECODE">Means <input aria-label="C2 meaning"><span class="f">Destination</span><input aria-label="C2 destination"></td>
+        <td data-stage="3. EXECUTE">Calculation <input aria-label="C2 calc"><span class="f">Result</span><input aria-label="C2 result"></td>
+        <td data-stage="4. WRITE">A = <input aria-label="C2 A"></td>
+      </tr>
+      <tr>
+        <th class="rowhead">Cycle 3<span>use the PC you wrote</span></th>
+        <td data-stage="1. FETCH">IR holds <input aria-label="C3 IR"><span class="f">PC is now</span><input aria-label="C3 PC"></td>
+        <td data-stage="2. DECODE">Means <input aria-label="C3 meaning"><span class="f">Destination</span><input aria-label="C3 destination"></td>
+        <td data-stage="3. EXECUTE">Value to be copied <input aria-label="C3 result"></td>
+        <td data-stage="4. WRITE">Write it here: <input aria-label="C3 write"></td>
+      </tr>
+    </tbody>
+  </table>
 
   <section class="check">
     <h2 style="margin-top:0">Final check</h2>
-    <label>Final PC and Register A</label>
-    <p>PC = <input aria-label="Final PC" style="width:70px"> &nbsp; Register A = <input aria-label="Final A" style="width:70px"></p>
-    <label>Is “ADD 1 TO THE VALUE IN REGISTER A” an instruction or a stage?</label>
-    <input aria-label="Instruction or stage">
-    <label>Does each instruction use one stage or all four stages? Explain in one sentence.</label>
-    <textarea aria-label="Cycle distinction"></textarea>
+    <p>Ending state: PC = <input class="sm" aria-label="Final PC"> &nbsp; A = <input class="sm" aria-label="Final A">
+       &nbsp; M[20] = <input class="sm" aria-label="Final M20"></p>
+    <p>You ran <strong>three</strong> instructions. How many stages did each one pass through?
+       <input class="sm" aria-label="Stages per instruction"></p>
+    <p>In cycle 3 the result did not go into register A. Which stage told you that?
+       <input aria-label="Which stage" style="width:min(240px,50%);display:inline-block"></p>
+    <p>Why could the machine not skip the decode stage on this worksheet?
+       <input aria-label="Why decode" style="width:min(520px,80%);display:inline-block"></p>
   </section>
 
-  <p class="boundary"><strong>Model boundary:</strong> Real computers do not store English sentences as instructions.
-    We are hiding how instructions are encoded so we can focus on the repeating machine cycle.</p>
+  <p class="boundary"><strong>Model boundary:</strong> a real machine stores instructions as numbers, not as
+    short codes like <b>LDI</b>, and its lookup table is built into the hardware rather than printed on a page.
+    We are hiding that encoding so the repeating cycle stays visible.</p>
 </body>
 </html>
