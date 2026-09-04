@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IT 520 — Run two machine cycles</title>
+  <style>
+    :root { color-scheme: light; --ink:#17202a; --blue:#174a7e; --pale:#eef5fb; --line:#9aa7b2; }
+    * { box-sizing: border-box; }
+    body { max-width: 1050px; margin: 0 auto; padding: 24px; color:var(--ink); font:16px/1.4 system-ui,sans-serif; }
+    h1 { margin:0 0 4px; font-size:clamp(1.55rem,4vw,2.25rem); color:var(--blue); }
+    h2 { margin:24px 0 8px; font-size:1.3rem; }
+    p { margin:8px 0; }
+    .sub { color:#46535f; }
+    .machine { display:grid; grid-template-columns:1.4fr .8fr; gap:14px; margin:20px 0; }
+    .box, .stage, .check { border:2px solid var(--blue); border-radius:10px; padding:14px; }
+    .memory { background:var(--pale); }
+    .memory div { padding:8px; margin-top:8px; border:1px solid var(--line); background:white; font-family:ui-monospace,monospace; }
+    .state { display:grid; gap:8px; }
+    .state div { padding:8px; border-bottom:1px solid var(--line); }
+    .cycle { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+    .stage { min-height:205px; border-width:1.5px; }
+    .stage h3 { margin:0 0 8px; color:var(--blue); }
+    .prompt { font-size:.92rem; min-height:54px; }
+    input, textarea { width:100%; border:1px solid #697783; border-radius:5px; padding:7px; font:inherit; background:white; }
+    input { margin:4px 0 8px; }
+    textarea { min-height:58px; resize:vertical; }
+    .checkpoint { margin:12px 0; padding:10px 14px; background:#f7f7f2; border-left:5px solid #c18b1b; }
+    .check { margin-top:20px; border-color:#4f6575; }
+    .check label { display:block; margin:12px 0 4px; font-weight:650; }
+    code { font-weight:700; }
+    .boundary { margin-top:14px; font-size:.9rem; color:#46535f; }
+    @media (max-width:800px) { .cycle { grid-template-columns:1fr 1fr; } }
+    @media (max-width:520px) { .machine,.cycle { grid-template-columns:1fr; } .stage { min-height:0; } }
+    @media print {
+      body { max-width:none; padding:0; font-size:11pt; }
+      .stage { min-height:178px; break-inside:avoid; }
+      .cycle { grid-template-columns:repeat(4,1fr); }
+      .machine { grid-template-columns:1.4fr .8fr; }
+      textarea { min-height:42px; }
+      h2 { break-after:avoid; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Run two machine cycles</h1>
+  <p class="sub">Name <input aria-label="Name" style="width:min(360px,70%);display:inline-block"></p>
+  <p><strong>Your job:</strong> follow two plain-English instructions. Every instruction goes through
+    <strong>FETCH → DECODE → EXECUTE → WRITE</strong>.</p>
+
+  <section class="machine" aria-label="Starting machine">
+    <div class="box memory">
+      <strong>MEMORY — instructions waiting to run</strong>
+      <div>address 0: WRITE 5 TO REGISTER A</div>
+      <div>address 1: ADD 1 TO THE VALUE IN REGISTER A</div>
+    </div>
+    <div class="box state">
+      <strong>STARTING STATE</strong>
+      <div>PC = 0</div>
+      <div>IR = empty</div>
+      <div>Register A = unset</div>
+    </div>
+  </section>
+
+  <h2>Cycle 1 — the PC points to address 0</h2>
+  <section class="cycle">
+    <article class="stage">
+      <h3>1. FETCH</h3>
+      <p class="prompt">Copy the instruction at the PC into the IR. Then move the PC to the next address.</p>
+      <label>IR now holds</label><textarea aria-label="Cycle 1 IR"></textarea>
+      <label>PC is now</label><input aria-label="Cycle 1 PC">
+    </article>
+    <article class="stage">
+      <h3>2. DECODE</h3>
+      <p class="prompt">In your own words, what is the instruction asking the machine to do?</p>
+      <textarea aria-label="Cycle 1 decode"></textarea>
+      <label>Destination</label><input aria-label="Cycle 1 destination">
+    </article>
+    <article class="stage">
+      <h3>3. EXECUTE</h3>
+      <p class="prompt">Determine the result the instruction will produce.</p>
+      <label>Result ready to write</label><input aria-label="Cycle 1 result">
+      <p>Do not update A until the write stage.</p>
+    </article>
+    <article class="stage">
+      <h3>4. WRITE</h3>
+      <p class="prompt">Put the result into the decoded destination.</p>
+      <label>Register A is now</label><input aria-label="Cycle 1 register A">
+    </article>
+  </section>
+  <div class="checkpoint"><strong>Checkpoint:</strong> PC = <input aria-label="Checkpoint 1 PC" style="width:70px"> &nbsp; Register A = <input aria-label="Checkpoint 1 A" style="width:70px"></div>
+
+  <h2>Cycle 2 — run the next instruction</h2>
+  <section class="cycle">
+    <article class="stage">
+      <h3>1. FETCH</h3>
+      <p class="prompt">Use the current PC. Copy that instruction into the IR, then advance the PC.</p>
+      <label>IR now holds</label><textarea aria-label="Cycle 2 IR"></textarea>
+      <label>PC is now</label><input aria-label="Cycle 2 PC">
+    </article>
+    <article class="stage">
+      <h3>2. DECODE</h3>
+      <p class="prompt">What operation, input, and destination does this instruction name?</p>
+      <textarea aria-label="Cycle 2 decode"></textarea>
+      <label>Destination</label><input aria-label="Cycle 2 destination">
+    </article>
+    <article class="stage">
+      <h3>3. EXECUTE</h3>
+      <p class="prompt">Use the current value in A and show the calculation.</p>
+      <label>Calculation</label><input aria-label="Cycle 2 calculation">
+      <label>Result ready to write</label><input aria-label="Cycle 2 result">
+    </article>
+    <article class="stage">
+      <h3>4. WRITE</h3>
+      <p class="prompt">Put the result into the decoded destination.</p>
+      <label>Register A is now</label><input aria-label="Cycle 2 register A">
+    </article>
+  </section>
+
+  <section class="check">
+    <h2 style="margin-top:0">Final check</h2>
+    <label>Final PC and Register A</label>
+    <p>PC = <input aria-label="Final PC" style="width:70px"> &nbsp; Register A = <input aria-label="Final A" style="width:70px"></p>
+    <label>Is “ADD 1 TO THE VALUE IN REGISTER A” an instruction or a stage?</label>
+    <input aria-label="Instruction or stage">
+    <label>Does each instruction use one stage or all four stages? Explain in one sentence.</label>
+    <textarea aria-label="Cycle distinction"></textarea>
+  </section>
+
+  <p class="boundary"><strong>Model boundary:</strong> Real computers do not store English sentences as instructions.
+    We are hiding how instructions are encoded so we can focus on the repeating machine cycle.</p>
+</body>
+</html>
