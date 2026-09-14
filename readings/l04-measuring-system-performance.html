@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang xml:lang>
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>IT 520: Measuring system performance</title>
+  <style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+.display.math{display: block; text-align: center; margin: 0.5rem auto;}
+</style>
+  <style type="text/css">body{max-width:44rem;margin:2rem auto;padding:0 1rem;font:17px/1.6 Georgia,"Times New Roman",serif;color:#1a1a1a}
+h1,h2{font-family:Helvetica,Arial,sans-serif;line-height:1.25}
+h1{font-size:1.9rem;margin-bottom:.5rem}h2{font-size:1.3rem;margin-top:2rem}
+code{font:.92em "Courier New",monospace;background:#f3f4f5;padding:.05em .3em;border-radius:3px}
+a{color:#0b5c8a}li{margin:.25rem 0}
+</style>
+</head>
+<body>
+<h1 id="measuring-system-performance">Measuring system performance</h1>
+<h2 id="what-this-is-about">What this is about</h2>
+<p>Every computer system does work for someone: a web server answers
+requests, a database runs queries, a print room prints jobs.
+<strong>Computer system performance analysis</strong> is the study of
+how well a system does that work: how long a request takes, how much
+work gets finished, and how busy each part of the system is. The
+questions it answers come up across a system&#39;s whole life: when it is
+designed, when someone decides how large a system to buy, and when its
+workload grows.</p>
+<p>Analysts answer those questions in three ways. They can rely on
+experience and intuition, which is quick but hard to verify. They can
+run experiments, which are accurate but expensive and describe only the
+conditions tested. Or they can build a <strong>model</strong>, a
+simplified description that keeps only what matters for the system&#39;s
+behavior.</p>
+<p>You may also hear the term <strong>performance monitoring</strong>.
+Monitoring is one activity within this field: collecting measurements
+from a running system over time. It uses the same measurements
+introduced here.</p>
+<p>Every one of these approaches rests on the same foundation, which is
+the subject of this reading: a small set of measurements with precise
+meanings, and two relationships that follow directly from them. With
+those, &quot;the system is slow&quot; becomes a claim you can check.</p>
+<h2 id="what-does-fast-mean">What does “fast” mean?</h2>
+<p>A system can feel slow in more than one way. One student may wait a
+long time for a print job, while the print room still finishes many jobs
+each hour. To describe performance clearly, we have to say <strong>what
+work we observed, where the system begins and ends, and which
+measurement we mean</strong>.</p>
+<h2 id="one-print-room-four-measurements">One print room, four
+measurements</h2>
+<p>Suppose we watch one printer in a campus print room across several
+comparable 60-minute intervals. The records show that, in an average
+hour:</p>
+<ul>
+<li>8 print jobs finish;</li>
+<li>the printer is actively printing for 40 minutes; and</li>
+<li>an average of 2 jobs are inside our boundary, either waiting or
+printing.</li>
+</ul>
+<p>We will treat one submitted print job as one request. Our system
+boundary starts when a job joins this printer&#39;s line and ends when its
+pages finish. Changing either choice would change what our measurements
+mean.</p>
+<p><strong>Throughput</strong> asks how fast completed work leaves the
+system. If <code>C</code> jobs complete during an observation interval
+<code>T</code>, then</p>
+<p><code>X = C / T = 8 jobs / 1 hour = 8 jobs/hour</code>.</p>
+<p>Throughput is a rate for many completed jobs. It does not tell us how
+long any one job spent in the system. It is also an observed rate, not
+the printer&#39;s advertised maximum speed.</p>
+<p><strong>Service time</strong> asks how long one request holds the
+resource that performs the work. The printer was busy for
+<code>B = 40</code> minutes and finished <code>C = 8</code> jobs, so
+each completed job used the printer for an average of</p>
+<p><code>S = B / C = 40 minutes / 8 jobs = 5 minutes/job</code>.</p>
+<p>Service time does not include time in line. A job can require only 5
+minutes of printing and still take much longer from submission to
+completion.</p>
+<p><strong>Utilization</strong> is the share of the observation interval
+during which a resource is busy. The printer was busy for 40 of 60
+minutes, so</p>
+<p><code>U = 40 / 60 = 2/3</code>, or about <code>67%</code>.</p>
+<p>The same result follows from the <strong>Utilization
+Law</strong>:</p>
+<p><code>U = X · S = (8 jobs/hour)(5 minutes/job) = 40 minutes/hour = 2/3</code>.</p>
+<p>The units matter: jobs cancel, leaving busy time divided by observed
+time. Utilization is not throughput. Throughput counts finished jobs per
+hour; utilization reports the fraction of the hour for which this
+printer was busy.</p>
+<p><strong>Latency</strong> asks how long one request spends inside the
+chosen system boundary, from arrival to departure. It includes both
+waiting and service. We could time every job directly, but the average
+number of jobs inside gives us another way. The relationship called
+<strong>Little&#39;s Law</strong> is</p>
+<p><code>N = X · R</code>,</p>
+<p>where <code>N</code> is the average number of requests inside,
+<code>X</code> is throughput, and <code>R</code> is average latency. In
+the print room, <code>N = 2 jobs</code> and
+<code>X = 8 jobs/hour</code>, so</p>
+<p><code>R = N / X = 2 jobs / (8 jobs/hour) = 0.25 hour = 15 minutes/job</code>.</p>
+<p>The average job therefore spends 15 minutes inside: 5 minutes
+receiving service and 10 minutes waiting. The two laws agree: of the 2
+jobs inside on average, <code>X · S = 2/3</code> of a job is printing
+and the other <code>4/3</code> are waiting. These are averages across
+the stated workload and hour, not promises about every individual
+job.</p>
+<h2 id="why-latency-is-not-1--throughput">Why latency is not
+<code>1 / throughput</code></h2>
+<p>The printer completes 8 jobs per hour, so completions are spaced 7.5
+minutes apart on average. That spacing is not the same as a job&#39;s
+15-minute latency. Little&#39;s Law shows why: <code>R = N / X</code>, so
+latency equals <code>1 / X</code> only when an average of exactly one
+job is inside. Here 2 jobs are inside, because while one job prints
+another is already waiting, so latency is twice the spacing. In larger
+systems, several resources can also serve requests at the same time.</p>
+<p>The gap can run the other way, too. If only 1 job arrived per hour,
+completions would be 60 minutes apart, but that job would find no line
+and finish in about 5 minutes. Throughput describes the stream of
+completions; latency follows one request through the system.</p>
+<p>That is why “higher throughput” does not automatically mean “lower
+latency.” Queueing, concurrency, workload, and the amount of offered
+work can move the two measurements differently. Before comparing two
+systems, state:</p>
+<ol type="1">
+<li>the work counted as one request;</li>
+<li>the system boundary;</li>
+<li>the observation interval and workload;</li>
+<li>the load conditions; and</li>
+<li>how many observations or runs support the claim.</li>
+</ol>
+<p>One fast run is evidence about one run. It is not yet a general
+statement about the system.</p>
+<h2 id="reference-and-optional-depth">Reference and optional depth</h2>
+<p>The notation and two laws come from Lazowska, Zahorjan, Graham, and
+Sevcik, <a href="https://homes.cs.washington.edu/~lazowska/qsp/Images/Chap_03.pdf"><em>Quantitative
+System Performance</em>, Chapter 3, §§3.2–3.3, pp. 40–46</a>. That
+chapter is the authoritative course reference; this reading is the
+introductory route through its key ideas. The opening section draws on
+the same book&#39;s <a href="https://homes.cs.washington.edu/~lazowska/qsp/Images/Chap_01.pdf">Chapter
+1, §1.1</a>, which describes the questions performance analysts answer
+and the three ways they answer them.</p>
+<p>For another plain-language treatment of latency components and the
+difference between a rated capacity and observed throughput, see
+Peterson and Davie, <a href="https://book.systemsapproach.org/foundation/performance.html#bandwidth-and-latency"><em>Computer
+Networks: A Systems Approach</em>, §1.5.1</a>. Its examples concern
+networks, but the measurement distinction applies more broadly.</p>
+</body>
+</html>
