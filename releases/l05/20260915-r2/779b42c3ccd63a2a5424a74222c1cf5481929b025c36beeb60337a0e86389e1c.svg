@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+  <title id="title">Disk throughput ceiling of 15 reports per hour</title>
+  <desc id="desc">A 60-minute hour is divided into 15 four-minute disk slots. Twelve slots show the current afternoon rate, leaving only three slots before the disk's maximum modeled throughput.</desc>
+  <g font-family="system-ui, -apple-system, Segoe UI, sans-serif" fill="#172033">
+    <text x="90" y="72" font-size="38" font-weight="700">The disk has 60 minutes to give each hour</text>
+    <text x="90" y="112" font-size="27" fill="#3a4658">Each report needs 4 minutes of disk time</text>
+
+    <g transform="translate(90 180)">
+      <rect x="0" y="0" width="68" height="112" rx="5" fill="#155eef" stroke="#172033" stroke-width="3"/>
+      <rect x="68" y="0" width="68" height="112" fill="#155eef" stroke="#172033" stroke-width="3"/>
+      <rect x="136" y="0" width="68" height="112" fill="#155eef" stroke="#172033" stroke-width="3"/>
+      <rect x="204" y="0" width="68" height="112" fill="#155eef" stroke="#172033" stroke-width="3"/>
+      <rect x="272" y="0" width="68" height="112" fill="#155eef" stroke="#172033" stroke-width="3"/>
+      <rect x="340" y="0" width="68" height="112" fill="#155eef" stroke="#172033" stroke-width="3"/>
+      <rect x="408" y="0" width="68" height="112" fill="#155eef" stroke="#172033" stroke-width="3"/>
+      <rect x="476" y="0" width="68" height="112" fill="#155eef" stroke="#172033" stroke-width="3"/>
+      <rect x="544" y="0" width="68" height="112" fill="#155eef" stroke="#172033" stroke-width="3"/>
+      <rect x="612" y="0" width="68" height="112" fill="#155eef" stroke="#172033" stroke-width="3"/>
+      <rect x="680" y="0" width="68" height="112" fill="#155eef" stroke="#172033" stroke-width="3"/>
+      <rect x="748" y="0" width="68" height="112" fill="#155eef" stroke="#172033" stroke-width="3"/>
+      <rect x="816" y="0" width="68" height="112" fill="#d5dce8" stroke="#172033" stroke-width="3"/>
+      <rect x="884" y="0" width="68" height="112" fill="#d5dce8" stroke="#172033" stroke-width="3"/>
+      <rect x="952" y="0" width="68" height="112" rx="5" fill="#d5dce8" stroke="#172033" stroke-width="3"/>
+      <text x="34" y="70" font-size="24" font-weight="700" text-anchor="middle" fill="#fff">1</text>
+      <text x="782" y="70" font-size="24" font-weight="700" text-anchor="middle" fill="#fff">12</text>
+      <text x="850" y="70" font-size="24" font-weight="700" text-anchor="middle">13</text>
+      <text x="986" y="70" font-size="24" font-weight="700" text-anchor="middle">15</text>
+    </g>
+
+    <path d="M906 316 L906 350" stroke="#b35c00" stroke-width="5"/>
+    <path d="M892 338 L906 356 L920 338" fill="#b35c00"/>
+    <text x="906" y="395" font-size="31" font-weight="800" text-anchor="middle" fill="#8a4700">12 reports/hour now</text>
+    <text x="906" y="430" font-size="25" text-anchor="middle" fill="#3a4658">80% of the disk's modeled capacity</text>
+
+    <path d="M90 486 L90 516 L1110 516 L1110 486" fill="none" stroke="#172033" stroke-width="5"/>
+    <text x="600" y="570" font-size="36" font-weight="800" text-anchor="middle">60 ÷ 4 = 15 reports/hour maximum</text>
+    <text x="600" y="610" font-size="25" text-anchor="middle" fill="#3a4658">A bound, not a promise that latency stays low near it</text>
+  </g>
+</svg>

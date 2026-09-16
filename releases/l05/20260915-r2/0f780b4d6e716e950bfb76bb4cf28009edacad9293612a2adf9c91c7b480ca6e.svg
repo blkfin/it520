@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+  <title id="title">How 48 busy disk minutes become four minutes per report</title>
+  <desc id="desc">A 60-minute hour contains 48 busy minutes and 12 idle minutes. The 48 busy minutes are divided among 12 finished reports, giving four disk minutes per report.</desc>
+  <g font-family="system-ui, -apple-system, Segoe UI, sans-serif" fill="#172033">
+    <text x="90" y="72" font-size="38" font-weight="700">One hour on the disk</text>
+
+    <rect x="90" y="120" width="816" height="88" rx="10" fill="#155eef"/>
+    <rect x="906" y="120" width="204" height="88" rx="10" fill="#d5dce8"/>
+    <text x="498" y="175" font-size="30" font-weight="700" text-anchor="middle" fill="#ffffff">48 minutes busy</text>
+    <text x="1008" y="175" font-size="27" font-weight="650" text-anchor="middle">12 idle</text>
+    <text x="90" y="246" font-size="25" fill="#3a4658">60-minute measurement window</text>
+
+    <path d="M498 266 L498 310" stroke="#172033" stroke-width="4"/>
+    <path d="M486 298 L498 314 L510 298" fill="none" stroke="#172033" stroke-width="4"/>
+    <text x="90" y="334" font-size="30" font-weight="700">Share the busy time across 12 finished reports</text>
+
+    <g transform="translate(90 370)">
+      <rect x="0" y="0" width="85" height="92" rx="6" fill="#f0a500" stroke="#172033" stroke-width="3"/>
+      <rect x="85" y="0" width="85" height="92" fill="#9bbcff" stroke="#172033" stroke-width="3"/>
+      <rect x="170" y="0" width="85" height="92" fill="#9bbcff" stroke="#172033" stroke-width="3"/>
+      <rect x="255" y="0" width="85" height="92" fill="#9bbcff" stroke="#172033" stroke-width="3"/>
+      <rect x="340" y="0" width="85" height="92" fill="#9bbcff" stroke="#172033" stroke-width="3"/>
+      <rect x="425" y="0" width="85" height="92" fill="#9bbcff" stroke="#172033" stroke-width="3"/>
+      <rect x="510" y="0" width="85" height="92" fill="#9bbcff" stroke="#172033" stroke-width="3"/>
+      <rect x="595" y="0" width="85" height="92" fill="#9bbcff" stroke="#172033" stroke-width="3"/>
+      <rect x="680" y="0" width="85" height="92" fill="#9bbcff" stroke="#172033" stroke-width="3"/>
+      <rect x="765" y="0" width="85" height="92" fill="#9bbcff" stroke="#172033" stroke-width="3"/>
+      <rect x="850" y="0" width="85" height="92" fill="#9bbcff" stroke="#172033" stroke-width="3"/>
+      <rect x="935" y="0" width="85" height="92" rx="6" fill="#9bbcff" stroke="#172033" stroke-width="3"/>
+      <text x="42.5" y="57" font-size="26" font-weight="800" text-anchor="middle">1</text>
+      <text x="127.5" y="57" font-size="26" text-anchor="middle">2</text>
+      <text x="212.5" y="57" font-size="26" text-anchor="middle">3</text>
+      <text x="510" y="57" font-size="30" text-anchor="middle">…</text>
+      <text x="977.5" y="57" font-size="26" text-anchor="middle">12</text>
+    </g>
+
+    <path d="M90 490 L90 515 L175 515 L175 490" fill="none" stroke="#b35c00" stroke-width="5"/>
+    <text x="90" y="568" font-size="34" font-weight="800" fill="#8a4700">48 busy minutes ÷ 12 reports = 4 disk minutes per report</text>
+  </g>
+</svg>
