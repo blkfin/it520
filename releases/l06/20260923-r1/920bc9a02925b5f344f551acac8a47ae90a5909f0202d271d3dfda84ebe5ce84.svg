@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="720" viewBox="0 0 1400 720" role="img" aria-labelledby="title desc">
+  <title id="title">The byte 2D written as bits and hexadecimal</title>
+  <desc id="desc">The hexadecimal digit 2 spans the left four bits 0010. The hexadecimal digit D spans the right four bits 1101. A complete hexadecimal lookup table appears below.</desc>
+  <style>text{font-family:system-ui,sans-serif;fill:#172635}.mono{font-family:ui-monospace,monospace}.h{font-size:38px;font-weight:700}.n{font-size:34px}.s{font-size:30px}.box{stroke:#526579;stroke-width:3}</style>
+  <rect width="1400" height="720" rx="24" fill="#f8fafc"/>
+  <text x="60" y="62" class="n"><tspan font-weight="700">Hexadecimal:</tspan> sixteen characters, 0–9 then A–F; one character = four bits.</text>
+  <text x="60" y="142" class="h">hex</text>
+  <rect x="220" y="90" width="440" height="80" rx="10" fill="#fff3b0" class="box"/><rect x="660" y="90" width="440" height="80" rx="10" fill="#fff3b0" class="box"/>
+  <g class="h mono" text-anchor="middle"><text x="440" y="143">2</text><text x="880" y="143">D</text></g>
+  <text x="60" y="232" class="h">bits</text>
+  <g class="n mono" text-anchor="middle">
+    <text x="275" y="232">0</text><text x="385" y="232">0</text><text x="495" y="232">1</text><text x="605" y="232">0</text>
+    <text x="715" y="232">1</text><text x="825" y="232">1</text><text x="935" y="232">0</text><text x="1045" y="232">1</text>
+  </g>
+  <g class="s mono">
+    <text x="180" y="310" font-weight="700">Hex</text><text x="340" y="310" font-weight="700">Bits</text><text x="800" y="310" font-weight="700">Hex</text><text x="960" y="310" font-weight="700">Bits</text>
+    <text x="190" y="360">0</text><text x="325" y="360">0000</text><text x="810" y="360">8</text><text x="945" y="360">1000</text>
+    <text x="190" y="410">1</text><text x="325" y="410">0001</text><text x="810" y="410">9</text><text x="945" y="410">1001</text>
+    <rect x="145" y="425" width="385" height="47" rx="8" fill="#d4eeeb"/><text x="190" y="460" font-weight="700">2</text><text x="325" y="460" font-weight="700">0010</text><text x="810" y="460">A</text><text x="945" y="460">1010</text>
+    <text x="190" y="510">3</text><text x="325" y="510">0011</text><text x="810" y="510">B</text><text x="945" y="510">1011</text>
+    <text x="190" y="560">4</text><text x="325" y="560">0100</text><text x="810" y="560">C</text><text x="945" y="560">1100</text>
+    <text x="190" y="610">5</text><text x="325" y="610">0101</text><rect x="765" y="575" width="385" height="47" rx="8" fill="#d4eeeb"/><text x="810" y="610" font-weight="700">D</text><text x="945" y="610" font-weight="700">1101</text>
+    <text x="190" y="660">6</text><text x="325" y="660">0110</text><text x="810" y="660">E</text><text x="945" y="660">1110</text>
+    <text x="190" y="710">7</text><text x="325" y="710">0111</text><text x="810" y="710">F</text><text x="945" y="710">1111</text>
+  </g>
+</svg>
