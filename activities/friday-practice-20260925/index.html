@@ -1,0 +1,44 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Practice: digits, places, and hex</title>
+<style>@page{size:letter;margin:.45in}*{box-sizing:border-box}body{font:12.5px/1.2 system-ui,sans-serif;color:#172635;max-width:8in;margin:auto}h1{font-size:21px;margin:0 0 3px}h2{font-size:16px;margin:9px 0 3px}.ref{border:2px solid #526579;border-radius:7px;padding:5px 8px;background:#f8fafc}.tbl{border-collapse:collapse;width:100%;text-align:center;margin:3px 0}.tbl td,.tbl th{border:1px solid #8495a6;padding:3px 4px}.tbl.left{text-align:left}code{font:1em ui-monospace,monospace}.answer{height:46px;border-bottom:1px solid #8b98a5}.long{height:110px}.page{break-before:page}.tag{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#526579}p{margin:3px 0}ol{margin:3px 0 3px 19px;padding:0}li{margin:3px 0}.fill td{height:26px}.bits{letter-spacing:.35em}.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}</style>
+<h1>Digits, places, and hex</h1>
+<p>Name: ______________________________ &nbsp; Friday, September 25. Work alone or in pairs. <strong>Core: A–D. Extensions: E, F.</strong> Show the places you added, not just the answer.</p>
+<table class="tbl" aria-label="Place values for eight bits"><tr><th>bit</th><th>7</th><th>6</th><th>5</th><th>4</th><th>3</th><th>2</th><th>1</th><th>0</th></tr><tr><th>place is worth</th><td>128</td><td>64</td><td>32</td><td>16</td><td>8</td><td>4</td><td>2</td><td>1</td></tr></table>
+
+<h2><span class="tag">Core</span> A. Counting with fewer symbols</h2>
+<ol><li>How many symbols can one base-10 digit use? One base-2 digit? One hex character? List them.</li>
+<li>Count from zero to eight in base 2. Which number is the first that needs a fourth bit, and why?</li></ol><div class="answer"></div>
+
+<div class="two"><div>
+<h2><span class="tag">Core</span> B. Binary and decimal</h2>
+<p>Read these as decimal. Write the places you added.</p>
+<ol><li><code>1111</code> = ________</li><li><code>10101</code> = ________</li><li><code>1011 0011</code> = ________</li></ol>
+<p>Now go the other way: pick the places that add up to the number and write all eight bits.</p>
+<ol start="4"><li>25 = <table class="tbl" style="width:auto;display:inline-table;vertical-align:middle"><tr><td style="width:22px;height:22px"></td><td style="width:22px;height:22px"></td><td style="width:22px;height:22px"></td><td style="width:22px;height:22px"></td><td style="width:22px;height:22px"></td><td style="width:22px;height:22px"></td><td style="width:22px;height:22px"></td><td style="width:22px;height:22px"></td></tr></table></li><li>100 = <table class="tbl" style="width:auto;display:inline-table;vertical-align:middle"><tr><td style="width:22px;height:22px"></td><td style="width:22px;height:22px"></td><td style="width:22px;height:22px"></td><td style="width:22px;height:22px"></td><td style="width:22px;height:22px"></td><td style="width:22px;height:22px"></td><td style="width:22px;height:22px"></td><td style="width:22px;height:22px"></td></tr></table></li></ol>
+</div><div>
+<h2><span class="tag">Core</span> C. Build the hex chart</h2>
+<p>Fill every empty cell. You'll use this table in D.</p>
+<table class="tbl fill"><tr><th>Decimal</th><th>Binary (4 bits)</th><th>Hex</th></tr><tr><td>0</td><td>0000</td><td>0</td></tr><tr><td>1</td><td></td><td></td></tr><tr><td>2</td><td></td><td></td></tr><tr><td>3</td><td></td><td></td></tr><tr><td>4</td><td></td><td></td></tr><tr><td>5</td><td></td><td></td></tr><tr><td>6</td><td></td><td></td></tr><tr><td>7</td><td></td><td></td></tr><tr><td>8</td><td></td><td></td></tr><tr><td>9</td><td></td><td></td></tr><tr><td>10</td><td></td><td>A</td></tr><tr><td>11</td><td></td><td></td></tr><tr><td>12</td><td></td><td></td></tr><tr><td>13</td><td>1101</td><td></td></tr><tr><td>14</td><td></td><td></td></tr><tr><td>15</td><td></td><td></td></tr></table>
+</div></div>
+
+<h2 class="page"><span class="tag">Core</span> D. Hex you have already seen</h2>
+<p>Every color on a web page can be written as a code like <code>#FF0000</code>. It is three bytes in hex: two characters for <strong>red</strong>, two for <strong>green</strong>, two for <strong>blue</strong>. Each byte says how much of that light to use, from 0 (none) to 255 (all of it).</p>
+<ol><li><code>#FF0000</code>: how much red, green, and blue is that, in decimal? What color is it? ______________________________</li>
+<li><strong>Mystery color: <code>#4EA1D6</code>.</strong> Fill the table, then predict the color before you look it up.
+<table class="tbl fill"><tr><th></th><th>Red <code>4E</code></th><th>Green <code>A1</code></th><th>Blue <code>D6</code></th></tr><tr><th>Eight bits</th><td></td><td></td><td></td></tr><tr><th>Decimal</th><td></td><td></td><td></td></tr></table>
+<p>My prediction: ______________________</p>
+<p>Now check it: search <code>#4EA1D6</code> (most search engines show the color), or paste it into any online color picker. Were you close?</p></li>
+<li><code>#808080</code> has the same amount of red, green, and blue. What do you think it looks like? What about <code>#000000</code> and <code>#FFFFFF</code>?<div class="answer"></div></li>
+<li><strong>Make your own.</strong> Pick three amounts from 0 to 255, write them as a hex color code, and give only the code to a partner. Can they tell roughly what color it is before looking it up?<div class="answer"></div></li></ol>
+
+<h2><span class="tag">Extension</span> E. How many patterns?</h2>
+<table class="tbl fill"><tr><th>Width (bits)</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th></tr><tr><th>Different patterns</th><td>4</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><th>Largest value</th><td>3</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></table>
+<ol><li>Write the general rule: with <em>n</em> bits, there are ______ patterns and the largest value is ______.</li>
+<li><strong>Twenty questions.</strong> A partner picks a whole number from 1 to 100. You may ask only yes/no questions. What is the fewest questions that <strong>guarantees</strong> you find it, no matter the number? Each answer is one bit. Play one round and count.<div class="answer"></div></li>
+<li>How many different colors can a code like <code>#4EA1D6</code> describe? ______________________</li>
+<li><strong>The kill screen.</strong> The arcade game <em>Pac-Man</em> keeps the level number in one byte, counting from zero, so level 1 is stored as <code>0000 0000</code>. What is stored at the highest level the byte can hold? Players who reach level 256 find half the maze turned to garbage. What goes wrong when the game adds one to that byte?<div class="answer"></div></li></ol>
+
+<h2><span class="tag">Extension</span> F. Clock speed, again</h2>
+<p>A processor runs at <strong>2.5 GHz</strong> (2.5 billion cycles per second).</p>
+<ol><li>How many cycles does it complete in one millisecond (1/1000 of a second)? ______________________</li>
+<li>If an instruction takes <strong>5 cycles</strong> on average, how many instructions can it run in that millisecond? ______________________</li></ol>
