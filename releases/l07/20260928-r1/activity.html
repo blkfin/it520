@@ -1,0 +1,25 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Activity: read a thermostat controller's report</title>
+<style>@page{size:letter;margin:.4in}*{box-sizing:border-box}body{font:13px/1.25 system-ui,sans-serif;color:#172635;max-width:8in;margin:auto;padding:0 8px}h1{font-size:22px;margin:0 0 4px}h2{font-size:15px;margin:8px 0 2px}.ref{border:2px solid #526579;border-radius:7px;padding:5px 8px;background:#f8fafc}.tbl{border-collapse:collapse;width:100%;text-align:center;margin:3px 0}.tbl td,.tbl th{border:1px solid #8495a6;padding:3px 4px}code{font:1em ui-monospace,monospace}.answer{height:34px;border-bottom:1px solid #8b98a5}.tall{height:52px}.tag{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#526579}p{margin:3px 0}ol{margin:3px 0 3px 20px;padding:0}li{margin:3px 0}.fill td{height:24px}.k{color:#0b5d1e;font-weight:600}</style>
+<h1>Read a thermostat controller's report</h1>
+<p>A small controller stores a <strong>four-bit temperature adjustment</strong> in degrees. It must represent warmer (+) and cooler (−) adjustments, so the controller writes the field in <strong>two's complement</strong>.</p>
+<p>Name: ______________________________ &nbsp; Work alone or in pairs. <strong>Core: A, B, C. Extension: D.</strong></p>
+<section class="ref"><strong>Reference</strong>
+<table class="tbl"><tr><th>Place value</th><td>8</td><td>4</td><td>2</td><td>1</td></tr></table>
+<table class="tbl"><tr><th>Four-bit rule</th><th>Smallest</th><th>Largest</th><th>Patterns</th></tr><tr><td>Unsigned</td><td>0</td><td>15</td><td>16</td></tr><tr><td>Two's complement</td><td>−8</td><td>+7</td><td>16</td></tr></table>
+<p><strong>Reading shortcut for two's complement:</strong> if the first bit is 0, the value is the same as unsigned. If the first bit is 1, take the unsigned value and subtract 2<sup>width</sup> (16 for four bits, 256 for eight). Example: <code>1111</code> is 15 − 16 = −1.</p>
+<p><strong>Two diagnostic questions:</strong> (1) What is the field's width and reading rule? (2) Does the intended value or result fit that rule's range?</p></section>
+<h2><span class="tag">Core</span> A. One pattern, two rules</h2>
+<table class="tbl fill"><tr><th>Bits</th><th>Unsigned value</th><th>Two's complement value</th></tr><tr><td><code>0110</code></td><td></td><td></td></tr><tr><td><code>1010</code></td><td></td><td></td></tr><tr><td><code>1100</code></td><td></td><td></td></tr></table>
+<h2><span class="tag">Core</span> B. Three presses warmer</h2>
+<p>The adjustment is +6 (<code>0110</code>). A user presses warmer three times, adding +3 (<code>0011</code>).</p>
+<ol><li>Add the bits. Which four bits are stored? ________</li><li>What does the controller read them as (two's complement)? ________</li><li>Did the operation overflow? Use the range to explain.</li></ol><div class="answer"></div>
+<h2><span class="tag">Core</span> C. Two strange dashboards</h2>
+<p><strong>Case 1.</strong> A user sets the adjustment to −5. The controller sends <code>1011</code>. The building dashboard shows <strong>11</strong>.</p>
+<p><strong>Case 2.</strong> An installer's tool writes +10 into the field as <code>1010</code>. The dashboard, reading the field as two's complement, shows <strong>−6</strong>.</p>
+<ol><li>For each case: is the problem the <em>reading rule</em> (signedness) or the <em>width</em>? Explain with the two diagnostic questions.</li></ol><div class="answer tall"></div>
+<ol start="2"><li>Recommend one repair for each case. Say what agreement or range the repair restores.</li></ol><div class="answer tall"></div>
+<ol start="3"><li>A teammate says: "For Case 2, just have the dashboard read the field as unsigned. Then it shows 10." Is that a repair? Why or why not?</li></ol><div class="answer"></div>
+<h2><span class="tag">Extension</span> D. Eight bits</h2>
+<p>A newer controller uses an eight-bit field. It sends <code>1111 0110</code>. What is the value under the unsigned rule? Under two's complement? ________ &nbsp; ________</p>
+</html>
