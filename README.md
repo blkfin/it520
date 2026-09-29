@@ -1,5 +1,9 @@
 # it520
 
+## September 30: Decimal to binary, and why 0.1 is not exact
+
+- [Lecture slides](https://blkfin.github.io/it520/l08/)
+
 ## September 28: Same bits, different meaning
 
 - [Lecture slides](https://blkfin.github.io/it520/l07/)
