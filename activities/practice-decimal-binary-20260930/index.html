@@ -1,0 +1,28 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Practice: decimal to binary, past the point</title>
+<style>@page{size:letter;margin:.45in}*{box-sizing:border-box}body{font:12.5px/1.2 system-ui,sans-serif;color:#172635;max-width:8in;margin:auto}h1{font-size:21px;margin:0 0 3px}h2{font-size:16px;margin:9px 0 3px}.ref{border:2px solid #526579;border-radius:7px;padding:5px 8px;background:#f8fafc}.tbl{border-collapse:collapse;width:100%;text-align:center;margin:3px 0}.tbl td,.tbl th{border:1px solid #8495a6;padding:3px 4px}.tbl.left{text-align:left}code{font:1em ui-monospace,monospace}.answer{height:46px;border-bottom:1px solid #8b98a5}.long{height:110px}.page{break-before:page}.tag{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#526579}p{margin:3px 0}ol{margin:3px 0 3px 19px;padding:0}li{margin:3px 0}.fill td{height:26px}.bits{letter-spacing:.35em}.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}body{font-size:13.5px}h2{font-size:17px;margin:14px 0 4px}.fill td{height:30px}.mini{width:auto;min-width:88%}.gap{height:34px}</style>
+<h1>Decimal to binary, past the point</h1>
+<p>Name: ______________________________ &nbsp; Goes with the September 30 lecture. Work alone or in pairs. Show your table, and check every answer by place value.</p>
+<table class="tbl" aria-label="Binary place values past the point"><tr><th>place is worth</th><td><strong>32</strong></td><td><strong>16</strong></td><td><strong>8</strong></td><td><strong>4</strong></td><td><strong>2</strong></td><td><strong>1</strong></td><td><strong>.</strong></td><td><strong>1/2</strong></td><td><strong>1/4</strong></td><td><strong>1/8</strong></td><td><strong>1/16</strong></td></tr><tr><th>as a decimal</th><td>32</td><td>16</td><td>8</td><td>4</td><td>2</td><td>1</td><td>.</td><td>0.5</td><td>0.25</td><td>0.125</td><td>0.0625</td></tr></table>
+
+<h2>A. Whole numbers</h2>
+<div class="two"><div>
+<ol start="1" style="counter-reset:list-item 0"><li>Convert 26 to binary. Divide by 2 until the quotient is 0; read the remainders <strong>last to first</strong>.<table class="tbl fill mini" aria-label="Division table for 26"><tr><th>Divide</th><th>Quotient</th><th>Remainder</th></tr><tr><td>26 ÷ 2</td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table><p>26 = ____________₂</p></li></ol>
+</div><div>
+<ol start="2" style="counter-reset:list-item 1"><li><code>101101₂</code> = ________ (decimal)<div class='gap'></div></li></ol>
+</div></div>
+
+<h2>B. Past the point</h2>
+<div class="two"><div>
+<ol start="1" style="counter-reset:list-item 0"><li><code>10.1₂</code> = ________ (decimal)<div class='gap'></div></li><li><code>0.0011₂</code> = ________ (decimal)<div class='gap'></div></li></ol>
+</div><div>
+<ol start="3" style="counter-reset:list-item 2"><li>Convert 0.8125 to binary. Double, copy the whole-number bit, keep the fraction part; stop when Keep is 0. Read the bits <strong>first to last</strong>.<table class="tbl fill mini" aria-label="Doubling table for 0.8125"><tr><th>Double</th><th>Bit</th><th>Keep</th></tr><tr><td>0.8125 × 2 =</td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table><p>0.8125 = ____________₂</p></li></ol>
+</div></div>
+
+<h2>C. One that never ends</h2>
+<div class="two"><div>
+<p>Run repeated doubling on 0.3. Stop when a Keep value repeats one you already wrote.</p>
+<table class="tbl fill mini" aria-label="Doubling table for 0.3"><tr><th>Double</th><th>Bit</th><th>Keep</th></tr><tr><td>0.3 × 2 =</td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table>
+</div><div>
+<ol start="1" style="counter-reset:list-item 0"><li>Which Keep value came back? Write 0.3 in binary using <code>…</code><div class='answer'></div></li><li>Why can't a computer store 0.3 exactly?<div class='answer'></div></li></ol>
+</div></div>
