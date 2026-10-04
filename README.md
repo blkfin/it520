@@ -3,7 +3,8 @@
 ## October 5: How do you store a point in a computer?
 
 - [Lecture slides](https://blkfin.github.io/it520/l09/)
-- [IEEE 754 practice sheet](https://blkfin.github.io/it520/l09/practice.html)
+- [IEEE 754 practice sheet (PDF)](https://blkfin.github.io/it520/l09/practice.pdf)
+- [IEEE 754 practice sheet (HTML)](https://blkfin.github.io/it520/l09/practice.html)
 
 ## September 30: Decimal to binary, and why 0.1 is not exact
 
