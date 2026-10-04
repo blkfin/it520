@@ -1,0 +1,45 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Practice: decimal to IEEE 754 and back</title>
+<style>@page{size:letter;margin:.45in}*{box-sizing:border-box}body{font:14px/1.3 system-ui,sans-serif;color:#172635;max-width:8in;margin:auto}h1{font-size:21px;margin:0 0 3px}h2{font-size:17px;margin:12px 0 4px}.ref{border:2px solid #526579;border-radius:7px;padding:5px 8px;background:#f8fafc;margin:5px 0}.tbl{border-collapse:collapse;text-align:center;margin:3px 0}.tbl td,.tbl th{border:1px solid #8495a6;padding:3px 5px}.fill td{height:31px;min-width:74px}code{font:1em ui-monospace,monospace}p{margin:3px 0}ol{margin:3px 0 3px 19px;padding:0}li{margin:13px 0}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}.page{break-before:page}.bits{border-collapse:collapse;table-layout:fixed;width:100%;margin:4px 0;text-align:center}.bits td{border:1px solid #8495a6;height:32px;padding:0;font:11px ui-monospace,monospace}.bits .idx td{height:14px;border:none;font-size:8.5px;color:#526579}.bits .hex td{height:24px;font-size:15px;font-weight:700;background:#eef2f6}.bits .lab td{height:16px;border:none;font:10.5px system-ui,sans-serif;color:#344a5f}.s{background:#fdeee6}.e{background:#e8f1fb}.m{background:#eef8ee}.nib{font:11.5px ui-monospace,monospace}.nib td,.nib th{padding:2px 5px}.blank{display:inline-block;border-bottom:1px solid #6b7b8c;min-width:120px;height:1.1em}.short{min-width:55px}.wide{min-width:260px}</style>
+<h1>Decimal to IEEE 754 32-bit, and back</h1>
+<p>Name: ______________________________ &nbsp; Goes with the October 5 lecture. Work alone or in pairs. One step per box; each step uses the one before it.</p>
+<div class="ref"><p><strong>The whole chain:</strong> decimal → binary → normalized <code>1.xxx × 2<sup>e</sup></code> → sign | exponent | mantissa → 32 bits</p><p><strong>Sign</strong> (bit 31): 0 positive, 1 negative. <strong>Exponent</strong> (bits 30–23): stored as <code>e + 127</code> (the bias). <strong>Mantissa</strong> (bits 22–0): the bits <em>after</em> the leading 1; the 1 is hidden, not stored.</p><p><strong>Decode:</strong> value = (−1)<sup>sign</sup> × <code>1.mantissa</code> × 2<sup>(stored exponent − 127)</sup></p></div>
+
+<h2>A. Store 12.75 as a 32-bit float</h2>
+<ol>
+<li>Split it: 12.75 = <span class="blank short"></span> + <span class="blank short"></span></li>
+<li><div class="two"><div>Whole part to binary. Divide by 2 until the quotient is 0; read the remainders <strong>last to first</strong>.
+<table class="tbl fill" aria-label="Division table for 12"><tr><th>Divide</th><th>Quotient</th><th>Remainder</th></tr><tr><td>12 ÷ 2</td><td>6</td><td>0</td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table>
+<p>12 = <span class="blank"></span>₂</p></div>
+<div>Fraction part to binary. Double, copy the whole-number bit, keep the fraction; stop when Keep is 0. Read the bits <strong>first to last</strong>.
+<table class="tbl fill" aria-label="Doubling table for 0.75"><tr><th>Double</th><th>Bit</th><th>Keep</th></tr><tr><td>0.75 × 2 =</td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table>
+<p>0.75 = 0.<span class="blank"></span>₂</p></div></div></li>
+<li>Join the two parts: 12.75 = <span class="blank"></span>₂</li>
+<li>Normalize: move the binary point until a single 1 is left of it.<br>
+Your step 3 number = 1.<span class="blank wide"></span> × 2<sup>____</sup><br>
+The point moved ______ places to the ____________.</li>
+<li>Sign bit: ____ &nbsp;&nbsp; because 12.75 is ______________</li>
+<li>Stored exponent: ____ + 127 = ______ = <span class="blank"></span>₂ (8 bits)</li>
+<li>Mantissa: copy the bits after the leading 1, then pad with 0s <strong>on the right</strong> to 23 bits.</li>
+<li>Write all 32 bits in the boxes.
+<table class="bits" aria-label="32 bits for 12.75"><tr class="idx"><td>31</td><td>30</td><td>29</td><td>28</td><td>27</td><td>26</td><td>25</td><td>24</td><td>23</td><td>22</td><td>21</td><td>20</td><td>19</td><td>18</td><td>17</td><td>16</td><td>15</td><td>14</td><td>13</td><td>12</td><td>11</td><td>10</td><td>9</td><td>8</td><td>7</td><td>6</td><td>5</td><td>4</td><td>3</td><td>2</td><td>1</td><td>0</td></tr><tr><td class="s"></td><td class="e"></td><td class="e"></td><td class="e"></td><td class="e"></td><td class="e"></td><td class="e"></td><td class="e"></td><td class="e"></td><td class="m"></td><td class="m"></td><td class="m"></td><td class="m"></td><td class="m"></td><td class="m"></td><td class="m"></td><td class="m"></td><td class="m"></td><td class="m"></td><td class="m"></td><td class="m"></td><td class="m"></td><td class="m"></td><td class="m"></td><td class="m"></td><td class="m"></td><td class="m"></td><td class="m"></td><td class="m"></td><td class="m"></td><td class="m"></td><td class="m"></td></tr><tr class="lab"><td class="s">sign</td><td colspan="8" class="e">exponent (8 bits)</td><td colspan="23" class="m">mantissa (23 bits)</td></tr></table></li>
+</ol>
+
+<div class="page"></div>
+<h2>B. A stored float, back to decimal</h2>
+<p>A program stored this 32-bit float, shown in hex: <code style="font-size:16px"><strong>C1A40000</strong></code>. What decimal number is it?</p>
+<table class="tbl nib" aria-label="Hex digit to 4 bits"><tr><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr><tr><td>0000</td><td>0001</td><td>0010</td><td>0011</td><td>0100</td><td>0101</td><td>0110</td><td>0111</td></tr><tr><th>8</th><th>9</th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th></tr><tr><td>1000</td><td>1001</td><td>1010</td><td>1011</td><td>1100</td><td>1101</td><td>1110</td><td>1111</td></tr></table>
+<ol>
+<li>Write each hex digit as its 4 bits, under the digit.
+<table class="bits" aria-label="Hex C1A40000 over 32 bit cells"><tr class="hex"><td colspan="4">C</td><td colspan="4">1</td><td colspan="4">A</td><td colspan="4">4</td><td colspan="4">0</td><td colspan="4">0</td><td colspan="4">0</td><td colspan="4">0</td></tr><tr class="idx"><td>31</td><td>30</td><td>29</td><td>28</td><td>27</td><td>26</td><td>25</td><td>24</td><td>23</td><td>22</td><td>21</td><td>20</td><td>19</td><td>18</td><td>17</td><td>16</td><td>15</td><td>14</td><td>13</td><td>12</td><td>11</td><td>10</td><td>9</td><td>8</td><td>7</td><td>6</td><td>5</td><td>4</td><td>3</td><td>2</td><td>1</td><td>0</td></tr><tr><td class="s"></td><td class="e"></td><td class="e"></td><td class="e"></td><td class="e"></td><td class="e"></td><td class="e"></td><td class="e"></td><td class="e"></td><td class="m"></td><td class="m"></td><td class="m"></td><td class="m"></td><td class="m"></td><td class="m"></td><td class="m"></td><td class="m"></td><td class="m"></td><td class="m"></td><td class="m"></td><td class="m"></td><td class="m"></td><td class="m"></td><td class="m"></td><td class="m"></td><td class="m"></td><td class="m"></td><td class="m"></td><td class="m"></td><td class="m"></td><td class="m"></td><td class="m"></td></tr><tr class="lab"><td class="s">sign</td><td colspan="8" class="e">exponent (8 bits)</td><td colspan="23" class="m">mantissa (23 bits)</td></tr></table></li>
+<li>Sign bit: ____ &nbsp;&nbsp; so the number is ______________</li>
+<li>Exponent bits: <span class="blank"></span>₂ = ______ &nbsp;&nbsp; True exponent: ______ − 127 = ______</li>
+<li>Mantissa: write the bits up to the last 1 (the rest are padding zeros): <span class="blank wide"></span></li>
+<li>Put back the hidden 1: 1.<span class="blank wide"></span> × 2<sup>____</sup></li>
+<li>Move the binary point by the exponent: <span class="blank wide"></span>₂ &nbsp; (which way? ______)</li>
+<li>Convert to decimal with place values, then apply the sign:
+<table class="tbl" style="width:100%" aria-label="Binary place values"><tr><th>place</th><td>32</td><td>16</td><td>8</td><td>4</td><td>2</td><td>1</td><td><strong>.</strong></td><td>1/2</td><td>1/4</td><td>1/8</td></tr><tr><th>your bits</th><td></td><td></td><td></td><td></td><td></td><td></td><td><strong>.</strong></td><td></td><td></td><td></td></tr></table>
+<div style="height:60px"></div>
+C1A40000 = <span class="blank"></span></li>
+</ol>
+<div class="ref"><p><strong>Check yourself:</strong> encode your answer back to 32 bits the way you did in Part A. You should get C1A40000.</p></div>
