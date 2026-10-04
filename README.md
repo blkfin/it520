@@ -1,5 +1,9 @@
 # it520
 
+## October 5: How do you store a point in a computer?
+
+- [Lecture slides](https://blkfin.github.io/it520/l09/)
+
 ## September 30: Decimal to binary, and why 0.1 is not exact
 
 - [Lecture slides](https://blkfin.github.io/it520/l08/)
