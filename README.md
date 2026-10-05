@@ -1,5 +1,9 @@
 # it520
 
+## October 7: Text and files
+
+- [Lecture slides](https://blkfin.github.io/it520/l10/)
+
 ## October 5: How do you store a point in a computer?
 
 - [Lecture slides](https://blkfin.github.io/it520/l09/)
