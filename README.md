@@ -3,6 +3,8 @@
 ## October 7: Text and files
 
 - [Lecture slides](https://blkfin.github.io/it520/l10/)
+- [In-class activity: what broke at receiving? (PDF)](https://blkfin.github.io/it520/l10/practice.pdf)
+- [In-class activity (HTML)](https://blkfin.github.io/it520/l10/practice.html)
 
 ## October 5: How do you store a point in a computer?
 
