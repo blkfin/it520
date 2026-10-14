@@ -1,0 +1,59 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>IT 520 Oct 14 activity: smaller, but still the same?</title><style>@page{size:letter;margin:.4in}*{box-sizing:border-box}body{font:12.5px/1.25 system-ui,sans-serif;color:#172635;max-width:8in;margin:auto}h1{font-size:20px;margin:0 0 2px}h2{font-size:14.5px;margin:7px 0 2px}.ref{border:2px solid #526579;border-radius:7px;padding:4px 8px;background:#f8fafc;margin:4px 0}.tbl{border-collapse:collapse;margin:3px 0}.tbl td,.tbl th{border:1px solid #8495a6;padding:1px 7px;min-width:5.5em;text-align:left}code,.mono{font:1em ui-monospace,monospace}p{margin:3px 0}ol{margin:2px 0 2px 21px;padding:0;list-style:none;counter-reset:q}ol.b{counter-reset:q 3}ol.c{counter-reset:q 6}li{margin:4px 0;counter-increment:q;position:relative}li::before{content:counter(q) ". ";position:absolute;left:-21px}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}.ans{border-bottom:1px solid #6b7b8c;height:1.45em;margin:1px 0}.small{font-size:12px;color:#344a5f}</style></head><body>
+<h1>IT 520 · Oct 14 activity: smaller, but still the same?</h1>
+<p>Name: ______________________________________</p>
+<p class="small">Work with a partner and use the reference box. Show your work: the steps are the answer.</p>
+
+<div class="ref two">
+<div><b>Hex digits</b>: 0–9, then A = 10, B = 11, C = 12, D = 13, E = 14, F = 15.<br>
+Two hex digits: <code>(left × 16) + right</code>. One hex digit is 4 bits.<br>
+<b>RLE format:</b> each run is one <b>record</b> = 1 count byte + 1 symbol byte.
+Each letter of input is 1 byte.<br>
+<b>Invariant:</b> after each record, decoding the records so far gives exactly the input consumed so far.</div>
+<div><b>Measure compression</b><br>
+ratio = compressed size ÷ original size (below 1: smaller; above 1: larger)<br>
+savings = (original − compressed) ÷ original<br>
+<b>Time</b><br>
+send time (s) = size (MB) ÷ speed (MB/s)<br>
+compressed route = encode + send + decode</div>
+</div>
+<h2>Part A: Hex to decimal</h2>
+<ol>
+<li>A log shows the byte <code>2F</code>. What decimal value is it? Show <code>(left × 16) + right</code>.
+<div class="ans"></div></li>
+<li>Another byte is <code>C4</code>. What decimal value is it? Write it as 8 bits too (4 bits per hex digit).
+<div class="ans"></div></li>
+<li>An RLE count byte reads <code>0C</code>. (a) How many copies of its symbol does it stand for?
+(b) A count byte has 8 bits. How many different bit patterns can 8 bits hold? What is the largest unsigned value, written in hex?
+<div class="ans"></div><div class="ans"></div></li>
+</ol>
+<h2>Part B: Run-length encoding and its invariant</h2>
+<ol class="b">
+<li><b>Encode.</b> <code>AAAAAAAAAAAABBBBBBBC</code>. Write the records. Then give original size, compressed size,
+ratio and savings. Write the first record's count as a hex byte.
+<div class="ans"></div><div class="ans"></div></li>
+<li><b>Find the bad record.</b> An encoder turned <code>MMMMNNNNNNPP</code> into
+<code>(4,M),(5,N),(2,P)</code>. Check the invariant after each record:
+<table class="tbl"><tr><th>After record</th><th>Input consumed so far</th><th>Decoded so far</th><th>Invariant holds?</th></tr>
+<tr><td>1</td><td></td><td></td><td></td></tr><tr><td>2</td><td></td><td></td><td></td></tr>
+<tr><td>3</td><td></td><td></td><td></td></tr></table>
+Which record first breaks it, and what is the repair? Would checking only the final length have told you <i>which</i> record?
+<div class="ans"></div></li>
+<li><b>Correct but bigger.</b> Encode <code>HELLO</code>. Does it decode exactly? Give the ratio.
+Why did it grow?
+<div class="ans"></div><div class="ans"></div></li>
+</ol>
+<h2>Part C: Choose a route</h2>
+<ol class="c">
+<li>A 30 MB sensor log must arrive with <b>exact bytes</b>. Lossless compression makes it 6 MB
+(complete size). Encoding takes 2 s and decoding 1 s. MB ÷ MB/s gives seconds.
+<table class="tbl"><tr><th>Route</th><th>At 3 MB/s</th><th>At 30 MB/s</th></tr>
+<tr><td>Send original 30 MB</td><td></td><td></td></tr>
+<tr><td>Encode + send 6 MB + decode</td><td></td><td></td></tr>
+<tr><td>Your choice</td><td></td><td></td></tr></table></li>
+<li>For each file, what recovery does the job require (exact bytes, or acceptable quality)? Which routes are allowed:
+lossless, lossy, or send unchanged?<br>
+(a) a phone photo shrunk for a web page thumbnail &nbsp; (b) a program installer &nbsp;
+(c) a <code>.zip</code> file you are about to compress again
+<div class="ans"></div><div class="ans"></div><div class="ans"></div></li>
+</ol>
+</body></html>

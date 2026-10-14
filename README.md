@@ -3,6 +3,8 @@
 ## October 14: Invariants and compression
 
 - [Lecture slides](https://blkfin.github.io/it520/l11/)
+- [In-class activity: smaller, but still the same? (PDF)](https://blkfin.github.io/it520/l11/practice.pdf)
+- [In-class activity (HTML)](https://blkfin.github.io/it520/l11/practice.html)
 
 ## October 7: Text and files
 
