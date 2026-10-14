@@ -1,5 +1,9 @@
 # it520
 
+## October 14: Invariants and compression
+
+- [Lecture slides](https://blkfin.github.io/it520/l11/)
+
 ## October 7: Text and files
 
 - [Lecture slides](https://blkfin.github.io/it520/l10/)
