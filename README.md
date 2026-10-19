@@ -3,6 +3,8 @@
 ## October 19: Sets mappings and predicates
 
 - [Lecture slides](https://blkfin.github.io/it520/l12/)
+- [In-class activity: what does the app tell you? (PDF)](https://blkfin.github.io/it520/l12/practice.pdf)
+- [In-class activity (HTML)](https://blkfin.github.io/it520/l12/practice.html)
 
 ## October 14: Invariants and compression
 

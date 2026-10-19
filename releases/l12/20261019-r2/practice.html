@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>IT 520 October 19 activity: What does the app tell you?</title>
+<style>
+@page{size:letter;margin:.42in}*{box-sizing:border-box}body{font:10.4pt/1.22 "DejaVu Sans",sans-serif;color:#172635;max-width:8in;margin:auto}h1{font-size:17pt;margin:0 0 4px}h2{font-size:11.2pt;margin:10px 0 4px}p{margin:4px 0}.meta{font-size:9pt}.reference{border:1px solid #526579;background:#f4f7fa;padding:7px;margin:7px 0}.reference p{margin:2px 0}table{width:100%;border-collapse:collapse;margin:5px 0}th,td{border:1px solid #6f8090;padding:5px;text-align:left}th{background:#eef2f6}.truth td{height:27px}.line{height:22px;border-bottom:1px solid #8495a6}.space{height:28px;border-bottom:1px solid #8495a6}code{font-family:"DejaVu Sans Mono",monospace;font-size:.96em}.small{font-size:9pt}section{break-inside:avoid}.note{border-left:3px solid #526579;padding-left:7px} @media screen{body{padding:20px;max-width:850px}}
+</style></head><body>
+<h1>What does the app tell you?</h1>
+<p class="meta"><b>IT 520 · October 19 · 20 minutes</b> &nbsp; Name: ___________________________</p>
+<p>Work with a partner. Use words and set notation; explain your choices. Complete the exit question yourself.</p>
+<div class="reference">
+<p><b>Our demo:</b> each observation selects one label from <b>S = {Sunny, Rain, Snow, Fog}</b>. Rain and Snow indicate precipitation. Our fictional school starts <b>On-time</b> for Sunny/Rain and uses <b>Delay</b> for Snow/Fog.</p>
+<p><b>Same predicates as the slides:</b> P(x) = precipitation reported; Q(x) = school delayed.<br><b>NOT P(x)</b> = no precipitation; <b>NOT Q(x)</b> = school on time.</p>
+<p class="small"><b>Definitions:</b> a set has distinct members; |A| counts them. N ∩ O means both; N ∪ O means either or both. A proposition is true or false; a predicate becomes a proposition when its inputs are supplied. AND requires both; OR includes both. A function assigns each input exactly one output. Domain = allowed inputs; codomain = declared output set; range = outputs attained over the whole domain.</p>
+</div>
+<section><h2>1. Select and count <span class="small">(3 minutes)</span></h2>
+<p>List the sets N = {x ∈ S : NOT P(x)} and O = {x ∈ S : NOT Q(x)}.</p>
+<p>N = __________________________ &nbsp; O = __________________________</p>
+<p>N ∩ O = ____________________ &nbsp; N ∪ O = ____________________ &nbsp; |N ∪ O| = ____</p>
+<p>The log is [Rain, Fog, Rain]. Number of observations: ____ &nbsp; Number of distinct labels: ____</p>
+</section>
+<section><h2>2. Test conditions <span class="small">(4 minutes)</span></h2>
+<p>Fill the table with T or F. Then give a counterexample to “Every report means school starts on time.”</p>
+<table class="truth"><thead><tr><th scope="col">Report x</th><th scope="col">NOT P(x)</th><th scope="col">NOT Q(x)</th><th scope="col">NOT P AND NOT Q</th><th scope="col">NOT P OR NOT Q</th></tr></thead><tbody>
+<tr><th scope="row">Sunny</th><td></td><td></td><td></td><td></td></tr><tr><th scope="row">Rain</th><td></td><td></td><td></td><td></td></tr><tr><th scope="row">Snow</th><td></td><td></td><td></td><td></td></tr><tr><th scope="row">Fog</th><td></td><td></td><td></td><td></td></tr>
+</tbody></table>
+<p>Counterexample and reason: __________________________________________________</p>
+<p>Is P(Fog) a proposition even if it is false? Explain. ________________________________</p>
+</section>
+<section><h2>3. Read a mapping <span class="small">(4 minutes)</span></h2>
+<p>The start-time app uses T : S → {On-time, Delay}. Write its assignments:</p>
+<p>Sunny → __________ &nbsp; Rain → __________ &nbsp; Snow → __________ &nbsp; Fog → __________</p>
+<p>Domain: _________________________ &nbsp; Codomain: _________________________</p>
+<p>Range: _________________________ &nbsp; Is T a function? Explain why shared outputs are allowed.</p>
+<div class="line"></div>
+<p class="small"><b>Extension if finished:</b> J uses the same rule on domain {Snow, Fog}, with codomain {On-time, Delay}. What is J’s range? __________________</p>
+</section>
+<section><h2>4. Class feedback + individual exit <span class="small">(after paired work)</span></h2>
+<p class="note small"><b>Full display dictionary:</b> 00 = Sunny · 01 = Rain · 10 = Snow · 11 = Fog.</p>
+<p>The full display receives <code>10</code>. Its report is __________. The start-time app receives <b>Delay</b>.<br>List <b>all</b> possible original reports: ______________________. Can it tell whether precipitation was reported? Why?</p>
+<div class="space"></div>
+<p><b>Individual exit:</b> Is a many-to-one mapping always a bug? Explain using the start-time app’s purpose.</p>
+<div class="space"></div>
+</section>
+</body></html>
