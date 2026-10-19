@@ -1,5 +1,9 @@
 # it520
 
+## October 19: Sets mappings and predicates
+
+- [Lecture slides](https://blkfin.github.io/it520/l12/)
+
 ## October 14: Invariants and compression
 
 - [Lecture slides](https://blkfin.github.io/it520/l11/)
