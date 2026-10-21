@@ -1,5 +1,11 @@
 # it520
 
+## October 21: Will it fit?
+
+- [Lecture slides](https://blkfin.github.io/it520/l13/)
+- [In-class activity: will it fit? (PDF)](https://blkfin.github.io/it520/l13/practice.pdf)
+- [In-class activity (HTML)](https://blkfin.github.io/it520/l13/practice.html)
+
 ## October 19: Sets mappings and predicates
 
 - [Lecture slides](https://blkfin.github.io/it520/l12/)
