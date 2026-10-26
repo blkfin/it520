@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Byte order and caching: practice</title>
+<style>
+@page { size: Letter; margin: 0.6in }
+* { box-sizing: border-box }
+body { font: 10.5pt/1.35 Arial, Helvetica, sans-serif; color: #1a1a1a; margin: 0 }
+h1 { font-size: 17pt; line-height: 1.15; margin: 0 0 4px }
+.governing { font-size: 12pt; font-style: italic; margin: 0 0 8px }
+.meta { margin: 0 0 4px }
+.name { display: inline-block; width: 3.6in; border-bottom: 1px solid #777 }
+h2 { font-size: 12.5pt; margin: 14px 0 4px; break-after: avoid }
+.q { break-inside: avoid; margin: 8px 0 12px }
+.q p { margin: 3px 0 }
+.write { border: 1px solid #888; border-radius: 3px; margin-top: 5px }
+table { border-collapse: collapse; margin: 5px 0 }
+th, td { border: 1px solid #888; padding: 3px 10px; text-align: center }
+th { background: #eee; font-weight: bold }
+td.blank { width: 0.85in; height: 0.32in }
+td.label { text-align: left }
+.rules { border: 1px solid #888; background: #f3f3f3; padding: 6px 10px; margin: 6px 0 4px; break-inside: avoid }
+.rules p { margin: 2px 0 }
+</style>
+</head>
+<body>
+
+<h1>Byte order and caching: practice</h1>
+<p class="governing">Where do a number's bytes sit, and how fast are they read?</p>
+<p class="meta"><strong>IT 520 &middot; October 26 &middot; 20 minutes &middot; Work in pairs</strong></p>
+<p class="meta">Name(s): <span class="name">&nbsp;</span></p>
+<p>Show your steps. Every value is a 4-byte unsigned integer, and addresses go up from X.</p>
+
+<h2>Part A. Byte order (about 8 minutes)</h2>
+
+<div class="q">
+<p><strong>1.</strong> A debugger shows four bytes of memory, starting at address X:</p>
+<table>
+<tr><th>Address</th><th>X</th><th>X+1</th><th>X+2</th><th>X+3</th></tr>
+<tr><td class="label">Byte</td><td>01</td><td>00</td><td>00</td><td>00</td></tr>
+</table>
+<p>(a) Write the value these bytes hold, in hex, if the machine is little-endian. Then write it if the machine is big-endian.</p>
+<p>(b) Can you tell from these four bytes alone which value the program stored? If not, what else would you need to know?</p>
+<div class="write" style="height:1.5in"></div>
+</div>
+
+<div class="q">
+<p><strong>2.</strong> On another machine, a program stores the value 300, which is 0x0000012C. The debugger shows these bytes, starting at X:</p>
+<table>
+<tr><th>Address</th><th>X</th><th>X+1</th><th>X+2</th><th>X+3</th></tr>
+<tr><td class="label">Byte</td><td>2C</td><td>01</td><td>00</td><td>00</td></tr>
+</table>
+<p>Is this machine big-endian or little-endian? Name the byte that tells you. Why could you answer here but not in question 1?</p>
+<div class="write" style="height:1.1in"></div>
+</div>
+
+<div class="q">
+<p><strong>3.</strong> A little-endian laptop sends the value 0x00C0FFEE to a server in a network message.</p>
+<p>(a) Fill in the bytes, one per box.</p>
+<table>
+<tr><th></th><th colspan="4">Bytes, in order</th></tr>
+<tr><td class="label">Laptop memory, X to X+3</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+<tr><td class="label">Network message, first byte sent to last</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+</table>
+<p>(b) The server is also little-endian. Does it need to convert the message? Suppose it skips converting: it puts the four message bytes, in the order they arrive, at X to X+3 and reads them with its own rule. What value does it get, in hex?</p>
+<div class="write" style="height:1.3in"></div>
+</div>
+
+<h2>Part B. Caching (about 12 minutes)</h2>
+
+<div class="rules">
+<p><strong>Rules for every question in Part B</strong></p>
+<p>A miss copies the whole block into the cache. A full cache drops the copy used longest ago.</p>
+<p>A hit takes 5 ns. A miss takes 100 ns. Each integer is 4 bytes.</p>
+</div>
+
+<div class="q">
+<p><strong>4.</strong> Write <em>temporal</em> or <em>spatial</em> for each habit, and say in a few words what is used again or used next.</p>
+<p>(a) A game reads the player's score every time it redraws the screen.</p>
+<div class="write" style="height:0.45in"></div>
+<p>(b) A music player reads a song's sound samples one after another, in the order they are stored.</p>
+<div class="write" style="height:0.45in"></div>
+<p>(c) A program compares every new temperature reading against the same highest-so-far value. Which habit does the highest-so-far value show?</p>
+<div class="write" style="height:0.45in"></div>
+</div>
+
+<div class="q">
+<p><strong>5.</strong> A list of eight integers, items 0 to 7, sits side by side at bytes 0 to 31. Blocks are 16 bytes, so bytes 0 to 15 are one block and bytes 16 to 31 are another. The cache starts empty and has room for two blocks.</p>
+<p>(a) The program reads items 0, 2, 4 and 6, in that order. Fill in the table.</p>
+<table>
+<tr><th>Read</th><th>Its bytes</th><th>Hit or miss</th></tr>
+<tr><td>Item 0</td><td class="blank"></td><td class="blank"></td></tr>
+<tr><td>Item 2</td><td class="blank"></td><td class="blank"></td></tr>
+<tr><td>Item 4</td><td class="blank"></td><td class="blank"></td></tr>
+<tr><td>Item 6</td><td class="blank"></td><td class="blank"></td></tr>
+</table>
+<p>(b) Next it reads items 1, 3, 5 and 7, which it has never read before. How many of these four reads miss? Is that temporal or spatial locality at work? Why?</p>
+<div class="write" style="height:1.0in"></div>
+</div>
+
+<div class="q">
+<p><strong>6.</strong> This grid of 12 integers is stored column by column: all of column 0 first, then column 1, then column 2. Each column is one 16-byte block. The cache holds two blocks.</p>
+<table>
+<tr><th></th><th>Column 0<br>(bytes 0 to 15)</th><th>Column 1<br>(bytes 16 to 31)</th><th>Column 2<br>(bytes 32 to 47)</th></tr>
+<tr><th>Row 0</th><td>1</td><td>5</td><td>9</td></tr>
+<tr><th>Row 1</th><td>2</td><td>6</td><td>10</td></tr>
+<tr><th>Row 2</th><td>3</td><td>7</td><td>11</td></tr>
+<tr><th>Row 3</th><td>4</td><td>8</td><td>12</td></tr>
+</table>
+<p>A program adds up all 12 numbers. Row by row reads 1, 5, 9, then 2, 6, 10, and so on. Column by column reads 1, 2, 3, 4, then 5, 6, 7, 8, and so on. Start each order with an empty cache.</p>
+<p>(a) For each order, count the misses and the hits, and give the total time.</p>
+<div class="write" style="height:1.7in"></div>
+</div>
+
+<div class="q">
+<p>(b) Which order is faster for this grid? Say why in one line.</p>
+<div class="write" style="height:0.6in"></div>
+</div>
+
+<div class="q">
+<p><strong>7.</strong> Two programs each make 100 reads. Program P gets 98 hits and 2 misses. Program Q gets 90 hits and 10 misses.</p>
+<p>(a) Give each program's total time.</p>
+<p>(b) In program Q, which take more of the time: the 90 hits or the 10 misses?</p>
+<p>(c) With no cache at all, every read goes to memory. How long would 100 reads take? What does that tell you about what the cache is for?</p>
+<div class="write" style="height:1.5in"></div>
+</div>
+
+</body>
+</html>

@@ -1,5 +1,11 @@
 # it520
 
+## October 26: Byte order and caching
+
+- [Lecture slides](https://blkfin.github.io/it520/l14/)
+- [In-class activity: byte order and caching (PDF)](https://blkfin.github.io/it520/l14/practice.pdf)
+- [In-class activity (HTML)](https://blkfin.github.io/it520/l14/practice.html)
+
 ## October 21: Will it fit?
 
 - [Lecture slides](https://blkfin.github.io/it520/l13/)
