@@ -3,6 +3,7 @@
 ## November 2: What does the operating system do so many programs can share one machine?
 
 - [Lecture slides](https://blkfin.github.io/it520/l15/)
+- [In-class activity: processes and page tables (PDF)](https://blkfin.github.io/it520/l15/activity.pdf)
 
 ## October 26: Byte order and caching
 
