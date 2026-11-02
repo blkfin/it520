@@ -1,5 +1,9 @@
 # it520
 
+## November 2: What does the operating system do so many programs can share one machine?
+
+- [Lecture slides](https://blkfin.github.io/it520/l15/)
+
 ## October 26: Byte order and caching
 
 - [Lecture slides](https://blkfin.github.io/it520/l14/)
