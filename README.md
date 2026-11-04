@@ -1,5 +1,10 @@
 # it520
 
+## November 4: Processes, memory regions and threads
+
+- [Lecture slides](https://blkfin.github.io/it520/l16/)
+- [In-class activity: one process, two threads (PDF)](https://blkfin.github.io/it520/l16/activity.pdf)
+
 ## November 2: What does the operating system do so many programs can share one machine?
 
 - [Lecture slides](https://blkfin.github.io/it520/l15/)
