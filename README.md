@@ -1,5 +1,10 @@
 # it520
 
+## November 9: What limits the speedup we get from adding workers?
+
+- [Lecture slides](https://blkfin.github.io/it520/l17/)
+- [In-class activity: photo export, adding workers (PDF)](https://blkfin.github.io/it520/l17/activity.pdf)
+
 ## November 4: Processes, memory regions and threads
 
 - [Lecture slides](https://blkfin.github.io/it520/l16/)
