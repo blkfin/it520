@@ -1,5 +1,9 @@
 # it520
 
+## November 16: Permutations — how many ways can you line up?
+
+- [Lecture slides](https://blkfin.github.io/it520/l18/)
+
 ## November 9: What limits the speedup we get from adding workers?
 
 - [Lecture slides](https://blkfin.github.io/it520/l17/)
