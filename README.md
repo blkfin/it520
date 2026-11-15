@@ -1,5 +1,9 @@
 # it520
 
+## November 18: Combinations — choosing a committee
+
+- [Lecture slides](https://blkfin.github.io/it520/l19/)
+
 ## November 16: Permutations — how many ways can you line up?
 
 - [Lecture slides](https://blkfin.github.io/it520/l18/)
