@@ -1,6 +1,11 @@
 # it520
 
-## November 18: Combinations — choosing a committee
+## November 18: What counts as different, and when must two share?
+
+- [Lecture slides](https://blkfin.github.io/it520/l20/)
+- [In-class activity: forced sharing (PDF)](https://blkfin.github.io/it520/l20/activity.pdf)
+
+## November 16: Combinations — choosing a committee
 
 - [Lecture slides](https://blkfin.github.io/it520/l19/)
 
