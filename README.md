@@ -1,5 +1,9 @@
 # it520
 
+## November 20: Friday study guide
+
+- [Study guide and practice questions (PDF)](https://blkfin.github.io/it520/l20/practice.pdf)
+
 ## November 18: What counts as different, and when must two share?
 
 - [Lecture slides](https://blkfin.github.io/it520/l20/)
